@@ -1,0 +1,69 @@
+<div class="w-11/12 m-auto mt-24 flex justify-between sm:flex-col md:flex-col lg:flex-col xl:flex-row 2xl:flex-row gap-8 sm:gap-1 md:gap-3 lg:gap-8 xl:gap-8 2xl:gap-8 items-center">
+    <div class="w-1/2 sm:w-full md:w-full lg:w-full xl:w-1/2 2xl:w-1/2">
+        <video class="m-auto pointer-events-none " src="https://cdnl.iconscout.com/lottie/premium/thumb/man-creating-account-8431984-6716088.mp4" loop autoplay></video>
+    </div>
+
+    <div class="w-1/2 sm:w-full md:w-full lg:w-full xl:w-1/2 2xl:w-1/2 py-2 px-24 sm:px-0 md:px-4 lg:px-8 xl:px-24 2xl:px-24">
+        <form (ngSubmit)="onSubmit(registrationForm)" #registrationForm="ngForm">
+
+            <div class="w-full flex justify-center items-center">
+                <label class="relative inline-flex items-center me-5 cursor-pointer">
+                    <input (input)="onToggle($event)" type="checkbox" value="" class="sr-only peer" checked>
+                    <div class="w-11 h-6 bg-gray-200 rounded-full peer dark:peer-focus:ring-red-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
+                    <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Signup as a {{current}}</span>
+                </label>
+            </div>
+            <br>
+
+            <div>
+                <label for="username" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Unique Username *</label>
+                <input type="text" name="username" id="username" [(ngModel)]="data.username" #username="ngModel" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Eg. ram@1234" required />
+                <div *ngIf="username.invalid && (username.dirty || username.touched)">
+                    <div class="text-red-500" *ngIf="username.errors?.['required']">Username is required</div>
+                </div>
+                <div *ngIf="!usernameAvailabiliy" class="text-red-500">This username is already taken by others.</div>
+            </div>
+            <br>
+
+            <div>
+                <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Name *</label>
+                <input type="text" name="name" id="name"  [(ngModel)]="data.name" #name="ngModel" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Eg. Ram Kumar" required />
+                <div class="text-red-500" *ngIf="name.invalid && (name.dirty || name.touched)">
+                    <div *ngIf="name.errors?.['required']">Name is required</div>
+                </div>
+            </div>
+            <br>
+
+            <div>
+                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email *</label>
+                <input type="email" email name="email" id="email" [(ngModel)]="data.email" #email="ngModel" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Eg. name@gmail.com" required />
+                <div class="text-red-500" *ngIf="email.invalid && (email.dirty || email.touched)">
+                    <div *ngIf="email.errors?.['required']">Email is required</div>
+                    <div *ngIf="email.errors?.['email']">Email is Invalid</div>
+                </div>
+            </div>
+            <br>
+
+            <div>
+                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your Password *</label>
+                <input type="password" name="password" minlength="8" id="password" [(ngModel)]="data.password" #password="ngModel" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                <div class="text-red-500" *ngIf="password.invalid && (password.dirty || password.touched)">
+                    <div *ngIf="password.errors?.['required']">Password is required</div>
+                    <div *ngIf="password.errors?.['minlength']">Password should be atleast 8 character</div>
+                </div>
+            </div>
+            <br>
+
+            <button class="w-full py-2 rounded-lg font-semibold" type="submit" 
+                    [disabled]="registrationForm.invalid || loading" 
+                    [ngStyle]="{'background': registrationForm.invalid || loading ? '#fff0f0' : '#DA454E', 'cursor': registrationForm.invalid || loading ? 'not-allowed' : 'pointer', 'color': registrationForm.invalid || loading ? 'red' : 'white'}" 
+                    >
+            <ng-container *ngIf="loading; else createAccountText">
+                <i class="fa fa-spinner fa-spin"></i>
+            </ng-container>
+            <ng-template #createAccountText>Create Account</ng-template>
+            </button>
+
+        </form>
+    </div>
+</div>

@@ -1,0 +1,79 @@
+<img *ngIf="loading" class="load pointer-events-none w-1/6 sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 2xl:w-1/6 m-auto mt-24" src="assets/loading.gif" alt="loading">
+
+<img *ngIf="userCartData.length===0 && !loading" class="w-96 m-auto mt-24 " src="https://img.freepik.com/premium-vector/shopping-cart-with-cross-mark-wireless-paymant-icon-shopping-bag-failure-paymant-sign-online-shopping-vector_662353-912.jpg" alt="emptycart" />
+
+<div *ngIf="userCartData.length>0 && !loading" class="w-11/12 m-auto mt-24 p-2 rounded-lg bg-red-500 flex justify-between items-center">
+    <h1  class="font-bold text-xl text-white">Cart: {{userCartData.length}} Books</h1>
+    <h1  class="font-bold text-xl">Total: ₹{{totalPrice()}}</h1>
+</div>
+<div *ngIf="userCartData.length>0 && !loading" class="parent overflow-auto whitespace-nowrap w-11/12 m-auto mt-4">
+    <div class="inline-block w-auto border m-2 border-slate-100 cursor-pointer shadow-md hover:shadow-lg hover:border-slate-300" *ngFor="let item of userCartData">
+        <div class="overflow-hidden">
+            <img class="w-full h-60 transition all-ease delay-1000ms hover:scale-125" src={{item.imageLink}} alt={{item.title}} />
+        </div>
+        <div class="p-2 font-semibold">
+            <h3>Title: <span class="text-red-500">{{item.title}}</span></h3>
+            <h3>Author: <span class="text-red-500">{{item.author_name}}</span></h3>
+            <div class="flex justify-between gap-1">
+                <h3 class="text-red-500">⭕₹{{item.price}}</h3>
+                <h3 class="text-red-500">⭕{{item.pages}} Pages</h3>
+                <h3>⭕<span class="text-blue-500">{{item.published}}</span></h3>
+            </div>
+        </div>
+        <button (click)="removeCart(item._id)" class="w-full bg-red-100 text-red-500 font-bold py-2">Remove to <i class="fa fa-shopping-cart"></i></button><br>
+    </div>
+</div>
+
+<div *ngIf="userCartData.length>0 && !loading" class="w-11/12 m-auto mt-3 font-semibold">
+    <form (ngSubmit)="formSubmit(paymentform)" #paymentform="ngForm" class="w-full p-2 text-bold">
+        <label for="name">Your Name *</label><br>
+        <input [defaultValue]="name" class="w-full py-1 rounded-md" type="text" name="name" id="name" [(ngModel)]="paymentData.name" #name="ngModel" placeholder="Enter Name" required />
+        <div class="text-red-500" *ngIf="name.invalid && (name.dirty || name.touched)">
+            <div *ngIf="name.errors?.['required']">Name is required</div>
+        </div><br><br>
+
+        <label for="mobile">Your Phone *</label><br>
+        <input class="w-full py-1 rounded-md" type="number" name="mobile" id="mobile" [(ngModel)]="paymentData.mobile" #mobile="ngModel" placeholder="1234567890" required />
+        <div class="text-red-500" *ngIf="mobile.invalid && (mobile.dirty || mobile.touched)">
+            <div *ngIf="mobile.errors?.['required']">Mobile is required</div>
+        </div><br><br>
+
+        <label>Payment Method *</label><br>
+        <div class="w-full flex flex-wrap justify-between gap-1 items-center" [(ngModel)]="paymentData.payment" name="paymentMethod" required>
+            <div class="flex justify-between items-center">
+                <input type="radio" name="paymentMethod" id="banking" required />
+                <label for="banking">Net Banking</label>
+            </div>
+            <div class="flex justify-between items-center">
+                <input type="radio" name="paymentMethod" id="cards" required />
+                <label for="cards">Credit/Debit Cards</label>
+            </div>
+            <div class="flex justify-between items-center">
+                <input type="radio" name="paymentMethod" id="cod" required />
+                <label for="cod">COD</label>
+            </div>
+            <div class="flex justify-between items-center">
+                <input type="radio" name="paymentMethod" id="wallets_upi" required />
+                <label for="wallets_upi">UPI/Wallets</label>
+            </div>
+        </div><br>
+
+
+
+        <label for="address">Your Address *</label><br>
+        <textarea class="w-full py-1 rounded-md" name="address" id="address" [(ngModel)]="paymentData.address" #address="ngModel" placeholder="Enter address here" required></textarea>
+        <div class="text-red-500" *ngIf="address.invalid && (address.dirty || address.touched)">
+            <div *ngIf="address.errors?.['required']">Address is required</div>
+        </div><br><br>
+
+        <button 
+        [ngStyle]="{'background': paymentform.invalid || paymentLoading ? '#fff0f0' : '#DA454E', 'cursor': paymentform.invalid || paymentLoading ? 'not-allowed' : 'pointer', 'color': paymentform.invalid || paymentLoading ? 'red' : 'white'}" 
+        [disabled]="paymentform.invalid || paymentLoading" class="w-full py-1 rounded-md bg-red-500 text-white font-bold" type="submit"
+        >
+        <ng-container *ngIf="paymentLoading; else paymentText">
+            <i class="fa fa-spinner fa-spin"></i>
+        </ng-container>
+        <ng-template #paymentText>Place Orders</ng-template>
+        </button>
+    </form>
+</div>

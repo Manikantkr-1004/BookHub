@@ -1,0 +1,178 @@
+<nav class="w-full z-40 shadow-lg fixed top-0 px-8 sm:px-1 md:px-3 lg:px-8 xl:px-8 2xl:px-8">
+  <div
+    class="flex flex-wrap items-center justify-between"
+  >
+    <a
+      routerLink=""
+    >
+      <img
+        src="assets/logo.png"
+        class="w-40 cursor-pointer"
+        alt="Logo"
+      />
+    </a>
+    <div
+      class="flex gap-2 justify-center items-center md:order-2 space-x-1 md:space-x-0 rtl:space-x-reverse"
+    >
+      <button *ngIf="!checkAuth()"
+        type="button"
+        data-dropdown-toggle="language-dropdown-menu"
+        class="navbar_last inline-flex items-center font-medium justify-center px-4 py-2 cursor-pointer"
+      >
+      <i class="fa fa-user-circle fa-xl"></i>
+      </button>
+      <button *ngIf="checkAuth() && !userImg || userImg===' '"
+        type="button"
+        data-dropdown-toggle="language-dropdown-menu"
+        class="navbar_last bg-red-500 text-white rounded-full inline-flex items-center font-medium justify-center w-12 h-12 cursor-pointer"
+      >
+      {{shortName()}}
+      </button>
+      <button *ngIf="checkAuth() && userImg && userImg!==' '"
+        type="button"
+        data-dropdown-toggle="language-dropdown-menu"
+        class="navbar_last shadow-lg border border-slate-200 rounded-full inline-flex items-center justify-center overflow-hidden w-12 h-12 cursor-pointer"
+      >
+      <img class="w-full rounded-full" src={{userImg}} alt={{name}}>
+      </button>
+      <!-- Dropdown -->
+      <div
+        class="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700"
+        id="language-dropdown-menu"
+      >
+        <ul class="sm:hidden md:block lg:block xl:block 2xl:block py-2 font-medium" role="none">
+          <li *ngIf="checkAuth()">
+            <a
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
+              role="menuitem"
+            >
+              <div class="inline-flex items-center pointer-events-none">
+                Hi, {{name}}
+              </div>
+            </a>
+          </li>
+          <li *ngIf="checkAuth()">
+            <a
+              routerLink="profile"
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
+              role="menuitem"
+            >
+              <div class="inline-flex items-center">
+                Profile
+              </div>
+            </a>
+          </li>
+          <li *ngIf="!checkAuth()">
+            <a
+              routerLink="login"
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
+              role="menuitem"
+            >
+              <div class="inline-flex items-center">
+                Login
+              </div>
+            </a>
+          </li>
+          <li *ngIf="!checkAuth()">
+            <a
+              routerLink="signup"
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
+              role="menuitem"
+            >
+              <div class="inline-flex items-center">
+                Signup
+              </div>
+            </a>
+          </li>
+          <li *ngIf="checkAuth()">
+            <a
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
+              role="menuitem"
+            >
+              <div class="inline-flex items-center text-sky-500 pointer-events-none">
+                &#64;{{username}}
+              </div>
+            </a>
+          </li>
+          <li *ngIf="checkAuth()" (click)="doLogout()">
+            <a
+              class="block cursor-pointer px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white"
+              role="menuitem"
+            >
+              <div class="inline-flex items-center text-red-500">
+                Logout
+              </div>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <button (click)="onToggle()"
+        data-collapse-toggle="navbar-language"
+        type="button"
+        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+        aria-controls="navbar-language"
+        aria-expanded="false"
+      >
+      <p *ngIf="!menuOpen"><i class="fa fa-bars fa-xl"></i></p>
+      <p *ngIf="menuOpen"><i class="fa fa-close fa-xl"></i></p>
+        <span class="sr-only">Open main menu</span>
+      </button>
+    </div>
+    <div
+      class="hidden w-full md:flex md:w-auto"
+      id="navbar-language"
+    >
+      <ul
+        class="flex flex-col font-medium py-2 px-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
+      >
+      <li *ngIf="checkAuth()" class="navbar_med my-1 text-sky-500 sm:block md:hidden lg:hidden xl:hidden 2xl:hidden">Hi, {{name}}</li>
+      <li *ngIf="checkAuth()" class="navbar_med my-1 text-sky-500 sm:block md:hidden lg:hidden xl:hidden 2xl:hidden">&#64;{{username}}</li>
+        <li class="navbar_med my-1">
+          <a
+            routerLink="discussions" routerLinkActive="active"
+            aria-current="page"
+            >Discussion</a
+          >
+        </li>
+        <li *ngIf="!checkAuth()" class="navbar_med my-1">
+          <a
+            routerLink="login" routerLinkActive="active"
+            >Login</a
+          >
+        </li>
+        <li *ngIf="checkAuth()" class="navbar_med my-1 sm:block md:hidden lg:hidden xl:hidden 2xl:hidden">
+          <a
+            routerLink="profile" routerLinkActive="active"
+            >Profile</a
+          >
+        </li>
+        <li *ngIf="checkAuth() && checkRole()" class="navbar_med my-1">
+          <a
+            routerLink="cart" routerLinkActive="active"
+            >Cart</a
+          >
+        </li>
+        <li *ngIf="checkAuth() && !checkRole()" class="navbar_med my-1 sm:hidden md:block lg:block xl:block 2xl:block ">
+          <a
+            routerLink="profile" routerLinkActive="active"
+            >Profile</a
+          >
+        </li>
+        <li *ngIf="!checkAuth()" class="navbar_med my-1">
+          <a
+            routerLink="signup" routerLinkActive="active"
+            >Signup</a
+          >
+        </li>
+        <li class="navbar_med my-1">
+          <a
+            routerLink="books" routerLinkActive="active"
+            >Books</a
+          >
+        </li>
+        <li *ngIf="checkAuth()" (click)="doLogout()" 
+        class="navbar_med my-1 text-red-500 cursor-pointer sm:block md:hidden lg:hidden xl:hidden 2xl:hidden">Logout</li>
+      </ul>
+    </div>
+  </div>
+</nav>

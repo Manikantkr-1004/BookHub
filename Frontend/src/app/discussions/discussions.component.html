@@ -1,0 +1,40 @@
+<img *ngIf="loading" class="load pointer-events-none w-1/6 sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 2xl:w-1/6 m-auto mt-24" src="assets/loading.gif" alt="loading">
+
+<div *ngIf="!loading" class="w-11/12 m-auto mt-24 p-2">
+    <h1 class="bg-sky-500 text-white font-bold text-center py-2 w-full rounded-t-md">Create Discussion <i class="fa fa-comment" ></i></h1>
+    <div class="border border-sky-500 p-1 grid grid-cols-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 gap-1 items-center">
+
+        <select (input)="onSelect($event)">
+            <option value="">--Select Book for Discussion--</option>
+            <option *ngFor="let item of bookData" value='{{item._id}}?{{item.title}}?{{item.author_name}}?{{item.imageLink}}'>{{item.title}}</option>
+        </select>
+
+        <input (input)="onComment($event)"  type="text" placeholder="Write Your Disscussion" />
+
+        <button (click)="onAdd()" class="bg-sky-300 text-sky-600 font-bold py-2">ADD</button>
+
+    </div>
+</div>
+
+<div *ngIf="!loading" class="w-11/12 m-auto mt-3">            
+
+    <div class="p-2 font-semibold">
+        <div class="bg-sky-100 border border-slate-500 rounded-md p-2 mb-2" *ngFor="let item of discussionData">
+            <div class="w-full flex flex-wrap justify-between items-center gap-1 text-red-500">
+                <img class="w-16 h-8" src={{item.book_image}} alt={{item.book_title}} />
+                <h1><i class="fa fa-book" ></i> {{item.book_title}}</h1>
+                <h1><i class="fa fa-user-circle" ></i> {{item.book_author}}</h1>
+            </div>
+            <div class="bg-sky-200 rounded-md p-1 mb-2" *ngFor="let ele of item.chat">
+                <h1><i class="fa fa-user" ></i> {{ele.published}}</h1>
+                <h1><span class="text-sky-600">&#64;{{ele.username}}:</span> {{ele.comment}}</h1>
+            </div>
+            <input (input)="onReply($event)" class="w-full rounded-t-md " type="text" placeholder="Enter Your reply here..." /><br>
+            <button (click)="addReply(item._id)" class="w-full rounded-b-md py-1 bg-sky-600 text-white font-semibold">Reply</button>
+
+        </div>
+    </div>
+
+    <div class="my-3 font-semibold text-red-500" *ngIf="discussionData.length===0 && !loading">There are no Discussions be First to Give Dicussion😊.</div>
+
+</div>

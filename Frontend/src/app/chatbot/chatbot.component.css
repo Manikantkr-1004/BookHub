@@ -1,0 +1,75 @@
+.botlogo {
+    filter: hue-rotate(140deg);
+    transition: all ease 0.5s;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.botlogo:hover {
+    scale: 0.9;
+    transform: rotate(360deg);
+}
+
+.bot {
+    width: 350px;
+    height: 470px;
+}
+
+
+.bot>.bot_header {
+    height: 8%;
+}
+
+.bot>.bot_mid {
+    height: 83%;
+}
+
+.bot>.bot_last {
+    height: 10%;
+}
+
+
+.bot_mid::-webkit-scrollbar {
+    width: 5px;
+}
+
+.bot_mid::-webkit-scrollbar-thumb {
+    background: #dfdfdf;
+    border-radius: 6px;
+}
+
+.gptparent{
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 5px;
+    scroll-behavior: smooth;
+}
+.gptparent::-webkit-scrollbar{
+    height: 5px;
+}
+.gptparent::-webkit-scrollbar-thumb{
+    background: #dfdfdf;
+    border-radius: 6px;
+}
+.gptchild{
+    display: inline-block;
+    margin: 0 5px;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 5px;
+    width: auto;
+    height: auto;
+    cursor: pointer;
+}
+.gptchild>img{
+    width: 100%;
+}
+
+@media all and (max-width:375px) {
+    .bot{
+        width: 100%;
+        height: 92vh;
+        bottom: 0;
+        right: 0;
+        border-radius: none;
+    }
+}

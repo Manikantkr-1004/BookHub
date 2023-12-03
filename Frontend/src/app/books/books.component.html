@@ -1,0 +1,48 @@
+<div class="w-11/12 m-auto mt-24 grid grid-cols-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 gap-4">
+    <select class="rounded-xl cursor-pointer" (input)="onGenre($event)">
+        <option value="">--Filter by Genre--</option>
+        <option value="Fiction">Fiction</option>
+        <option value="Fairy tales">Fairy tales</option>
+        <option value="Poetry">Poetry</option>
+        <option value="Religious Literature">Religious Literature</option>
+        <option value="Folk Tales">Folk Tales</option>
+        <option value="Magical Realism">Magical Realism</option>
+    </select>
+    <input (input)="onAuthor($event)" class="rounded-xl" type="search" placeholder="Search by Author Name" />
+    <input (input)="onTitle($event)" class="rounded-xl" type="search" placeholder="Search by Book Title" />
+</div>
+
+<img *ngIf="loading" class="load pointer-events-none w-1/6 sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 2xl:w-1/6 m-auto" src="assets/loading.gif" alt="loading">
+
+<h2 *ngIf="!loading && bookData.length>0" class="text-center font-bold text-xl m-8">There are {{bookData.length}} books on page no.{{page}}</h2>
+<h2 *ngIf="!loading && bookData.length===0" class="text-center font-bold text-xl m-8">There are no books related to your query</h2>
+
+<div *ngIf="!loading" class="w-11/12 m-auto mt-2 grid grid-cols-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4 gap-8">
+    <div class="border border-slate-100 cursor-pointer shadow-md hover:shadow-lg hover:border-slate-300" *ngFor="let item of bookData">
+        <div class="overflow-hidden">
+            <img class="w-full h-60 transition all-ease delay-1000ms hover:scale-125" src={{item.imageLink}} alt={{item.title}} />
+        </div>
+        <div class="p-2 font-semibold">
+            <h3>Title: <span class="text-red-500">{{item.title}}</span></h3>
+            <h3>Author: <span class="text-red-500">{{item.author_name}}</span></h3>
+            <p class="text-blue-500">{{item.description.substring(0,120)}}...</p>
+            <div class="flex justify-between gap-1">
+                <h3 class="text-red-500">⭕₹{{item.price}}</h3>
+                <h3 class="text-red-500">⭕{{item.pages}} Pages</h3>
+                <h3>⭕<span class="text-blue-500">{{item.published}}</span></h3>
+            </div>
+        </div>
+        <button routerLink="/book/{{item._id}}" class="w-full bg-red-100 text-red-500 font-bold py-2">View/Read Book</button><br>
+        <button *ngIf="!checkCart(item._id) && token && role==='user'" (click)="addToCart(item._id)" class="w-full mt-2 bg-red-100 text-red-500 font-bold py-2">Add To <i class="fa fa-shopping-cart"></i></button>
+        <button routerLink="/cart" *ngIf="checkCart(item._id) && token && role==='user'" class="w-full mt-2 bg-red-100 text-red-500 font-bold py-2">Go to <i class="fa fa-shopping-cart"></i></button>
+    </div>
+</div>
+<br><br>
+
+<div *ngIf="!loading" class="w-11/12 m-auto flex flex-wrap justify-center items-center">
+    <button (click)="onPage(i+1)" [disabled]="page===i+1"
+    [ngStyle]="{background: page === i + 1 ? '#ababab' : '',cursor: page === i + 1 ? 'not-allowed' : 'pointer'}"
+    class="py-2 px-4 bg-slate-200 font-semibold rounded-md m-1" *ngFor="let item of total; let i=index">
+        {{i+1}}
+    </button>
+</div>

@@ -1,0 +1,48 @@
+<img *ngIf="!botBox" (click)="onOpen()" src="assets/bot.gif" alt="bot"
+class="botlogo w-16 fixed bottom-2 right-4 cursor-pointer rounded-full" />
+
+<div *ngIf="botBox" class="bot rounded-3xl border border-slate-200 shadow-lg fixed bottom-4 right-4 bg-stone-50 z-50">
+    <div class="bot_header bg-red-500 w-full font-bold text-white rounded-t-3xl flex justify-between items-center py-1 px-4">
+        <h3>BookHub Ai <i class="fa fa-robot"></i></h3>
+        <h3 (click)="onClose()" class="cursor-pointer"><i class="fa fa-window-close fa-lg"></i></h3>
+    </div>
+
+    <div #scrollable_parent class="bot_mid overflow-y-auto p-2">
+        <div *ngFor="let item of conversation">
+            <div class="mb-3 font-medium" *ngIf="check(item.gpt)==='string'">
+                <i class="fa fa-robot"></i> {{item.gpt}}
+            </div>
+            <div class="mb-3 font-medium" *ngIf="check(item.gpt)==='empty'">
+                <i class="fa fa-robot"></i> There are no books in DataBase related to your query.
+            </div>
+            <div class="mb-3 font-medium" *ngIf="check(item.gpt)==='array'">
+                <div class="mb-2"><i class="fa fa-robot"></i> Here are {{item.gpt.length}} books related to your query...</div>
+                <div class="gptparent">
+                    <div routerLink="/book/{{ele._id}}" class="gptchild" *ngFor="let ele of item.gpt">
+                        <img src={{ele.imageLink}} alt={{ele._id}} loading="lazy" />
+                        <p><i class="fa fa-book"></i> {{ele.title}}</p>
+                        <p><i class="fa fa-check-circle"></i> {{ele.author_name}}, ₹{{ele.price}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="px-1 mb-3 text-amber-500 text-right rounded-md font-medium" *ngIf="item.user">
+                <i class="fa fa-user-circle"></i> {{item.user}}
+            </div>
+        </div>
+        <div *ngIf="loading">
+            <img class="w-12" src="assets/chatbotloading.gif" alt="loadingGif" />
+        </div>
+    </div>
+
+    <div class="bot_last w-full rounded-b-3xl">
+        <div class="relative mt-2 rounded-md shadow-sm">
+            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+              <span class="text-gray-500 sm:text-sm"><i class="fa fa-search fa-md"></i></span>
+            </div>
+            <input (keydown)="onPress($event)" value={{user}} (input)="onWrite($event)" type="text" class="block w-full rounded-b-3xl border-none focus:ring-slate-300 py-2.5 pl-10 placeholder:text-gray-400" placeholder="Ask Query / Book suggetions...">
+            <div (click)="onSend()" class="absolute inset-y-0 right-0 flex items-center pr-3">
+                <span class="text-gray-500 cursor-pointer sm:text-sm"><i class="fa fa-paper-plane fa-md"></i></span>
+            </div>
+        </div>
+    </div>
+</div>

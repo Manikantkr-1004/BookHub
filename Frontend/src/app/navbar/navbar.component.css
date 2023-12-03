@@ -1,0 +1,32 @@
+nav{
+    height: 70px;
+    background: white;
+}
+.active{
+    background: rgb(218,69,78);
+    color: white;
+    padding: 4px 12px;
+    font-weight: bold;
+    border-radius: 20px;
+    transition: none;
+    box-shadow: rgba(0, 0, 0, 0.295) 1.95px 1.95px 2.6px;
+}
+.navbar_med .active:hover{
+    color: white;
+}
+
+.navbar_med>a{
+    transition: all ease 0.5s;
+}
+.navbar_med>a:hover{
+    font-weight: bold;
+    color: rgb(218,69,78);
+}
+.navbar_last{
+    transition: all ease 0.5s;
+}
+.navbar_last:hover{
+    font-weight: bold;
+    scale: 1.1;
+    cursor: pointer;
+}

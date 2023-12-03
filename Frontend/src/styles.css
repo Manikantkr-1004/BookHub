@@ -1,0 +1,12 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '@fortawesome/fontawesome-free/css/all.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    scroll-behavior: smooth;
+    overscroll-behavior: auto;
+    touch-action: pan-x pan-y;
+}

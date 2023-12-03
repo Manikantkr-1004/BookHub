@@ -1,0 +1,66 @@
+<!-- top_content_html -->
+<div class="w-11/12 sm:w-90 md:w-90  relative m-auto flex justify-between sm:flex-col md:flex-col lg:flex-row xl:flex-row 2xl:flex-row gap-8 mt-24">
+    <div class="w-1/2 sm:w-full md:w-full lg:w-1/2 xl:w-1/2 2xl:w-1/2">
+        <video class="pointer-event-none hue-rotate-90" src="https://cdnl.iconscout.com/lottie/premium/thumb/boy-reading-e-book-6251906-5119936.mp4" autoplay loop></video>
+    </div>
+
+    <div class="sm:w-full md:w-full lg:w-1/2 xl:w-1/2 2xl:w-1/2 p-4">
+        <h1 class="font-bold text-4xl text-red-500">Affordable, Free & Best Books</h1><br>
+        <h3 class="font-semibold">This is the platform for Author and users both, If you want to read books you can go books sections else Signup as a Author and publish your own books for sell.</h3>
+        <br>
+        <h1 class="font-bold text-xl text-red-500">Some Key Features</h1><br>
+        <div class="grid gap-4 grid-cols-3">
+            <div class="bg-slate-200 rounded-md p-2"><i class="fa fa-user"></i> Users</div>
+            <div class="bg-slate-200 rounded-md p-2"><i class="fa fa-user-circle"></i> Authors</div>
+            <div class="bg-slate-200 rounded-md p-2"><i class="fa fa-robot"></i> ChatBot</div>
+            <div class="bg-slate-200 rounded-md p-2"><i class="fa fa-bolt"></i> AI Power</div>
+            <div class="bg-slate-200 rounded-md p-2"><i class="fa fa-inr"></i> Affordable Price</div>
+        </div>
+        <br>
+        <button routerLink="books" class="w-full bg-red-100 font-bold py-2 text-red-500 cursor-pointer hover:bg-red-200">Browse All Books</button>
+        <img class="w-80 sm:w-64 md:w-72 lg:w-80 xl:w-80 2xl:w-80 absolute bottom-1 sm:-bottom-10 md:-bottom-8 lg:-bottom-8 xl:-bottom-10 2xl:bottom-1 right-1 rotate-180" src="assets/arrow.webp" alt="arrow">
+    </div>
+</div>
+
+<!-- mid_content_html -->
+<div class="w-11/12 relative m-auto mt-20 ">
+    <h1 class="font-bold text-4xl text-red-500">Some Popular Books</h1><br>
+    <img class="w-80 sm:w-64 md:w-72 lg:w-80 xl:w-80 2xl:w-80 absolute -top-12 left-80 sm:left-1 md:left-2 lg:left-28 xl:left-80 2xl:left-80" src="assets/arrow.webp" alt="arrow">
+
+    <div class="w-full grid grid-cols-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 2xl:grid-cols-4 gap-8 justify-center align-center">
+        <div class="border border-slate-300 cursor-pointer hover:shadow-xl hover:border-slate-400" *ngFor="let item of bookData">
+            <div class="overflow-hidden">
+                <img class="transition all-ease delay-1000ms hover:scale-125" src={{item.imageLink}} alt={{item.title}} />
+            </div>
+            <div class="p-2 font-semibold">
+                <h3>Title: <span class="text-red-500">{{item.title}}</span></h3>
+                <h3>Author: <span class="text-red-500">{{item.author_name}}</span></h3>
+                <div class="flex justify-between gap-1">
+                    <h3 class="text-red-500">⭕₹{{item.price}}</h3>
+                    <h3 class="text-red-500">⭕{{item.pages}} Pages</h3>
+                    <h3>⭕<span class="text-blue-500">{{item.published}}</span></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <br>
+    <button routerLink="books" class="w-full sticky bottom-0 bg-red-100 font-bold py-2 text-red-500 cursor-pointer hover:bg-red-200">Browse All Books</button>
+</div>
+
+<!-- FAQ_content_html -->
+<div class="w-11/12 relative m-auto mt-16">
+    <h1 class="font-bold text-4xl text-red-500">FAQ'S</h1><br>
+    <img class="absolute -top-0 left-80 sm:left-20 md:left-2 lg:left-80 xl:left-80 2xl:left-80 blur-sm w-1/4" src="assets/mark.webp" alt="question_logo">
+    <img class="absolute -bottom-16 sm:-bottom-10 md:-bottom-16 lg:-bottom-16 xl:-bottom-16 2xl:-bottom-16 right-0 blur-sm w-1/4" src="assets/mark.webp" alt="question_logo">
+
+    <mat-accordion>
+        <mat-expansion-panel class="py-3 my-2" *ngFor="let item of faqData; let i = index">
+          <mat-expansion-panel-header>
+            <p class="font-bold">Q{{i+1}}. {{ item.title }}</p>
+          </mat-expansion-panel-header>
+          <p class="font-semibold mt-4"><span class="text-red-500">Ans:- </span>{{ item.des }}</p>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+</div>

@@ -1,0 +1,87 @@
+<img *ngIf="loading" class="load pointer-events-none w-1/6 sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 2xl:w-1/6 m-auto mt-24" src="assets/loading.gif" alt="loading" />
+
+<div *ngIf="!loading" class="w-2/3 sm:w-full md:w-11/12 lg:w-2/3 xl:2/3 2xl:2/3 m-auto mt-24 p-3">
+
+    <div *ngIf="!userData.image || userData.image===' '" class="w-32 h-32 bg-red-500 flex justify-center items-center text-4xl m-auto text-white rounded-full font-bold">{{shortName()}}</div>
+    <div *ngIf="userData.image && userData.image!==' '" class="w-32 h-32 rounded-full m-auto shadow-xl border border-slate-200 overflow-hidden"><img class="w-full rounded-full" src={{userData.image}} alt={{userData.name}} /></div>
+    <div class="w-full font-bold flex flex-wrap justify-between items-center gap-3 mt-3">
+        <h1>Name: <span class="text-red-500">{{userData.name}}</span></h1>
+        <h1>Username: <span class="text-red-500">&#64;{{userData.username}}</span></h1>
+        <h1>Email: <span class="text-red-500">{{userData.email}}</span></h1>
+    </div>
+    <div class="w-full font-bold mt-3">Password: <span class="text-red-500">************</span></div>
+    <div class="w-full font-bold mt-3">Created: <span class="text-red-500">{{userData.created}}</span></div>
+
+    <h1 *ngIf="role==='user'" (click)="onToggle()" class="bg-sky-500 cursor-pointer text-white font-bold text-center w-full mt-3 py-1 rounded-t-md"><i class="fa fa-user-circle"></i> Update Profile <i class="fa fa-user-circle"></i></h1>
+    <div *ngIf="update && role==='user'" class="w-full border border-sky-500 p-2">
+        <form (ngSubmit)="formSubmit($event)" class="w-full">
+            <input (input)="updateName($event)" placeholder={{userData.name}} class="w-full rounded-md" type="text" placeholder="Enter New Name" required /><br>
+            <input (input)="updateImage($event)" placeholder={{userData.image}} class="w-full rounded-md" type="text" placeholder="Enter Profile Image URL" [defaultChecked]="userData.image" required /><br>
+            <button type="submit" class="w-full rounded-md bg-sky-200 py-2 text-sky-500 font-bold">Click to Update</button>
+        </form>
+    </div>
+
+    <h1 *ngIf="role==='user'" class="bg-red-500 text-white font-bold text-center w-full mt-3 py-1 rounded-t-md">Your Order History</h1>
+    <div *ngIf="role==='user'" class="w-full border border-red-500 p-2 grid grid-cols-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 gap-2">
+        <div routerLink="/book/{{item._id}}" class="border border-slate-100 cursor-pointer shadow-md hover:shadow-lg hover:border-slate-300" *ngFor="let item of userData.purchased">
+            <div class="overflow-hidden">
+                <img class="w-full h-60 transition all-ease delay-1000ms hover:scale-125" src={{item.imageLink}} alt={{item.title}} />
+            </div>
+            <div class="p-2 font-semibold">
+                <h3>Title: <span class="text-red-500">{{item.title}}</span></h3>
+                <h3>Author: <span class="text-red-500">{{item.author_name}}</span></h3>
+                <div class="flex justify-between gap-1">
+                    <h3 class="text-red-500">⭕₹{{item.price}}</h3>
+                    <h3 class="text-red-500">⭕{{item.pages}} Pages</h3>
+                    <h3>⭕<span class="text-blue-500">{{item.published}}</span></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h1 *ngIf="role==='author'" (click)="onToggle()" class="bg-sky-500 cursor-pointer text-white font-bold text-center w-full mt-3 py-1 rounded-t-md"><i class="fa fa-book"></i> Add New Book <i class="fa fa-book"></i></h1>
+    <div *ngIf="update && role==='author'" class="w-full border border-sky-500 p-2">
+        <form (ngSubmit)="formSubmit($event)" class="w-full">
+            <div class="flex justify-between gap-1 items-center w-full">
+                <input (input)="bookTitle($event)" class="w-1/2 rounded-md" type="text" placeholder="Enter Book Title" required /><br>
+                <select class="w-1/2 rounded-md cursor-pointer" (input)="bookGenre($event)">
+                    <option value="">--Select Genre--</option>
+                    <option value="Fiction">Fiction</option>
+                    <option value="Fairy tales">Fairy tales</option>
+                    <option value="Poetry">Poetry</option>
+                    <option value="Religious Literature">Religious Literature</option>
+                    <option value="Folk Tales">Folk Tales</option>
+                    <option value="Magical Realism">Magical Realism</option>
+                </select>
+            </div><br>
+            <input (input)="bookDes($event)" class="w-full rounded-md" type="text" placeholder="Enter Book short Description" required /><br><br>
+
+            <div class="w-full flex justify-between gap-1 items-center">
+                <input (input)="bookPrice($event)" class="w-full rounded-md" type="text" placeholder="₹ Price" required /><br>
+                <input (input)="bookPage($event)" class="w-full rounded-md" type="text" placeholder="Pages no." required /><br>
+                <input (input)="bookImage($event)" class="w-full rounded-md" type="text" placeholder="Image URL" required /><br>
+            </div><br>
+            <button (click)="addBook()" type="submit" class="w-full rounded-md bg-sky-200 py-2 text-sky-500 font-bold">Click to Add</button>
+        </form>
+    </div>
+
+    <h1 *ngIf="role==='author'" class="bg-red-500 text-white font-bold text-center w-full mt-3 py-1 rounded-t-md">Your Published Books</h1>
+    <h1 *ngIf="role==='author' && authorData.length===0" class="text-red-500 font-bold">You haven't published books, Please publish from here.</h1>
+    <div *ngIf="role==='author' && authorData.length>0" class="w-full border border-red-500 p-2 grid grid-cols-3 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 gap-2">
+        <div routerLink="/book/{{item._id}}" class="border border-slate-100 cursor-pointer shadow-md hover:shadow-lg hover:border-slate-300" *ngFor="let item of authorData">
+            <div class="overflow-hidden">
+                <img class="w-full h-60 transition all-ease delay-1000ms hover:scale-125" src={{item.imageLink}} alt={{item.title}} />
+            </div>
+            <div class="p-2 font-semibold">
+                <h3>Title: <span class="text-red-500">{{item.title}}</span></h3>
+                <div class="flex justify-between gap-1">
+                    <h3 class="text-red-500">⭕₹{{item.price}}</h3>
+                    <h3 class="text-red-500">⭕{{item.pages}} Pages</h3>
+                    <h3>⭕<span class="text-blue-500">{{item.published}}</span></h3>
+                </div>
+                <button (click)="deleteBook(item._id)" class="w-full py-2 bg-red-200 hover:bg-red-300 text-red-500 font-bold"><i class="fa fa-trash fa-shake" ></i></button>
+            </div>
+        </div>
+    </div>
+
+</div>

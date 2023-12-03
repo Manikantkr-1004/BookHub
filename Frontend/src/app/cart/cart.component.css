@@ -1,0 +1,10 @@
+.parent::-webkit-scrollbar{
+    height: 5px;
+}
+.parent::-webkit-scrollbar-thumb{
+    border-radius: 5px;
+    background: #c9c9c9;
+}
+.load{
+    filter: hue-rotate(140deg);
+}

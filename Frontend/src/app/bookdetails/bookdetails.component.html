@@ -1,0 +1,64 @@
+<img *ngIf="loading" class="load pointer-events-none w-1/6 sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 2xl:w-1/6 m-auto mt-24" src="assets/loading.gif" alt="loading">
+
+<div *ngIf="!loading" class="w-11/12 m-auto mt-24 flex sm:flex-col md:flex-col lg:flex-col xl:flex-row 2xl:flex-row justify-between gap-3">
+
+    <div class="w-4/6 sm:w-full md:w-full lg:w-full xl:w-4/6 2xl:4/6 bg-slate-50 rounded-md p-2">
+        <div class="w-full flex justify-between items-center gap-0 cursor-pointer text-white">
+            <h1 (click)="onPrint()" class="bg-slate-600 hover:bg-slate-700 w-1/4 text-center py-3"><i class="fa fa-print fa-lg fa-shake"></i></h1>
+            <h1 (click)="onComment()" class="bg-sky-500 hover:bg-sky-600 w-1/4 text-center py-3"><i class="fa fa-comment fa-lg fa-shake"></i></h1>
+            <h1 (click)="onWhatsapp()" class="bg-green-500 hover:bg-green-600 w-1/4 text-center py-3"><i class="fa-brands fa-whatsapp fa-lg fa-beat"></i></h1>
+            <h1 (click)="onFacebook()" class="bg-blue-600 hover:bg-blue-700 w-1/4 text-center py-3"><i class="fa-brands fa-facebook fa-lg fa-beat"></i></h1>
+        </div>
+
+        <div class="w-full flex justify-between flex-wrap items-center gap-2 mt-3 font-bold">
+            <h1><i class="fa fa-certificate fa-spin" ></i> Author: <span class="text-red-500">{{bookData.author_name}}</span></h1>
+            <h1><i class="fa fa-certificate fa-spin" ></i> Genre: <span class="text-red-500">{{bookData.genre}}</span></h1>
+            <h1><i class="fa fa-certificate fa-spin" ></i> Published: <span class="text-red-500">{{bookData.published}}</span></h1>
+        </div>
+
+        <div class="w-full flex justify-between flex-wrap items-center gap-2 mt-4 font-bold">
+            <h1 class="text-4xl sm:text-3xl md:text-4xl lg:text-4xl xl:text-4xl 2xl:text-4xl">{{bookData.title}}</h1>
+            <h1 (click)="clickLike()" *ngIf="role==='user'" class="text-2xl transition ease-in-out delay-150 hover:-translate-y-1 cursor-pointer hover:text-red-500"><i class="fa fa-heart fa-sm"></i> {{bookData.likes.length}}</h1>
+        </div>
+
+        <img *ngIf="contentLoading" class="load pointer-events-none w-1/6 sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 2xl:w-1/6 m-auto my-8" src="assets/loading.gif" alt="loading">
+
+        <div *ngIf="!contentLoading" class="w-full mt-4 font-semibold">
+            {{bookContent}}
+        </div>
+        <br>
+
+        <!--Comment Section of Book Section -->
+
+        <div id="comments" class="w-full">            
+            <h1 class="bg-slate-600 text-white font-bold text-center rounded-t-md py-2">All Comments <i class="fa fa-comment"></i></h1>
+            <img *ngIf="reviewLoading" class="load pointer-events-none w-1/6 sm:w-1/2 md:w-1/2 lg:w-1/4 xl:w-1/4 2xl:w-1/6 m-auto my-8" src="assets/loading.gif" alt="loading">
+
+            <div *ngIf="!reviewLoading" class="border border-slate-600 p-2 font-semibold">
+                <div class="bg-sky-100 border border-sky-500 rounded-md p-2 mb-2" *ngFor="let item of reviewData">
+                    <div class="bg-sky-200 rounded-md p-1 mb-2" *ngFor="let ele of item.comments">
+                        <h1><i class="fa fa-user" ></i> {{ele.published}}</h1>
+                        <h1><span class="text-sky-600">&#64;{{ele.username}}:</span> {{ele.comment}}</h1>
+                    </div>
+                    <input (input)="replyComm($event)" class="w-full rounded-t-md " type="text" placeholder="Enter Your Comment here..." /><br>
+                    <button (click)="replyReview(item._id)" class="w-full rounded-b-md py-1 bg-sky-600 text-white font-semibold">Reply</button>
+
+                </div>
+                <input *ngIf="!reviewLoading" (input)="newComment($event)" class="w-full rounded-t-md " type="text" placeholder="Enter Your Comment here..." /><br>
+                <button *ngIf="!reviewLoading" (click)="addReview()" class="w-full rounded-b-md py-1 bg-slate-600 text-white font-semibold">Add New Comment</button>
+            </div>
+
+            <div class="my-3 font-semibold text-red-500" *ngIf="reviewData.length===0">There are no comments be First to Give Comments😊.</div>
+
+        </div>
+
+
+    </div>
+
+    <div class="w-2/6 sm:w-full md:w-full lg:w-full xl:w-2/6 2xl:w-2/6 overflow-hidden border border-slate-300 rounded-md h-60 sticky sm:static md:static lg:static xl:sticky 2xl:sticky top-20 sm:top-0 md:top-0 lg:top-0 xl:top-20 2xl:top-20">
+        <div class="w-full relative">
+            <img class="w-full h-full rounded-md" src="https://mir-s3-cdn-cf.behance.net/project_modules/hd/25194f112712581.6019a2ad067e8.jpg" alt="adbanner">
+            <h1 class="absolute top-1/2 left-1/2 text-red-500 font-bold text-6xl rotate-12 shadow-lg -translate-x-1/2 -translate-y-1/2">AD AD</h1>
+        </div>
+    </div>
+</div>
