@@ -1,17 +1,32 @@
-# BookHubX - Online Bookstore and Reading Community
+# BookHub - Online Bookstore, Discussion & ChatBot AI
+
+![bookhub](https://github.com/Manikantkr-1004/BookHub/assets/123896779/01fde78a-c3d4-4333-8822-964f241b01aa)
 
 ## Project Overview
 
-"BookHubX" is an advanced online platform that seamlessly integrates a feature-rich bookstore with a vibrant reading community. The project utilizes Angular as the primary frontend technology, providing users with an immersive experience in discovering, purchasing, and engaging with books. The backend can be developed using either Java or Node.js, and the database can be MySQL or MongoDB. Additionally, the project includes an intelligent chatbot service powered by GPT to assist users in finding books and authors based on their preferences.
+"BookHub" is an advanced online platform that seamlessly integrates a feature-rich bookstore with a vibrant reading community. The project utilizes Angular as the primary frontend technology, providing users with an immersive experience in discovering, purchasing, and engaging with books. The backend is developed using Node & Express, and the database MongoDB. Additionally, the project includes an intelligent chatbot service powered by GPT to assist users in finding books and authors based on their preferences.
+
+## Deployed URL
+
+ - For Frontend:- https://bookhubymani.netlify.app/
+ - For Backend:- https://bookhub-3of2.onrender.com/
 
 ### Key Features
 
 - **Bookstore:** Browse, purchase, and read books.
-- **Community Discussions:** Participate in discussions related to books and genres.
-- **Book Reviews and Ratings:** Write reviews, rate books, and see aggregated ratings.
-- **Reading Lists:** Create and share reading lists, recommend books.
-- **Author Interaction:** Authors can engage with readers, respond to reviews, and participate in discussions.
-- **Chatbot Service:** Powered by GPT, assists users in finding books, authors, and provides personalized recommendations.
+- **Community Discussions:** Participate in discussions related to books.
+- **Book Reviews:** Write reviews as well as reply to others..
+- **Author Interaction:** Authors can engage with readers by discussion & CRUD operation on his published books.
+- **Chatbot Service:** Powered by ChatGPT, assists users in finding books or issue by ChatBot and Book Content on BookDetails page by AI.
+
+### Tech Stack Used
+
+ - **In Frontend**
+ -- Angular, FlowBite, Tailwind
+
+ - **In Backend**
+ -- Express JS, Node JS, MongoDB
+
 
 ## Prerequisites
 
@@ -28,14 +43,13 @@ Before you begin, ensure you have the following installed:
 
    ```bash
    git clone https://github.com/manikantkr-1004/BookHub.git
-   cd bookhubx
    ```
 
 2. Install frontend dependencies:
 
    ```bash
    install frontend dependecies
-   cd frontend
+   cd Frontend
    npm install
    ```
 
@@ -43,7 +57,7 @@ Before you begin, ensure you have the following installed:
 
     ```bash
    install frontend dependecies
-   cd backend
+   cd Backend
    npm install
    ```
 Configure your database (replace [database] with your chosen database):
@@ -54,13 +68,13 @@ For MongoDB: create a .env file and create a key value pair with your mongoDb AT
 
 Start the backend server:
  ```bash
-   cd backend
+   cd Backend
    npm run server
  ```
 
 Start the Angular development server:
  ```bash
-   cd frontend
+   cd Frontend
    ng serve
  ```
 
