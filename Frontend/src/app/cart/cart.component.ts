@@ -22,6 +22,7 @@ export class CartComponent implements OnInit {
   name: string = '';
   role:string = ''
   userCartData: BookData[] = [];
+  purchasedData: BookData[] = [];
   loading: boolean = false;
   paymentData ={name:'',mobile:'',address:'',payment:''};
   paymentLoading:boolean = false;
@@ -48,6 +49,7 @@ export class CartComponent implements OnInit {
     if(this.token && this.userId){
       this.userService.getUserProfile(this.userId,this.token).subscribe((data:any)=>{
         this.userCartData = data.user.cart;
+        this.purchasedData = data.user.purchased;
         this.loading = false;
         console.log(data);
         
@@ -82,9 +84,10 @@ export class CartComponent implements OnInit {
 
   formSubmit(form:NgForm){
     if(form.valid){
+      
       this.paymentLoading = true;
 
-      this.userService.updatePurchased(this.userId,this.token,this.userCartData).subscribe((data)=>{
+      this.userService.updatePurchased(this.userId,this.token,[...this.purchasedData,...this.userCartData]).subscribe((data)=>{
 
         this.userService.updateCart(this.userId,this.token,[]).subscribe((data)=>{
           this.paymentLoading = false;
